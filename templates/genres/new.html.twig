@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="item-wrap">
+        {{ form_start(form, {'attr': {'class' : 'item'}}) }}
+        {{ form_row(form.name, {'attr': {'class' : 'form-control'}}) }}
+        <button class="btn btn-success" type="submit">Сохранить</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

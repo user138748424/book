@@ -1,0 +1,37 @@
+<div class="table-item-wrap">
+    <div class="mt10 col-xs-6 col-md-11 col-lg-11">
+        <div class="header-items">Жанры</div>
+
+        <div class="nav-panel">
+            <div class="add-item"><a class="btn btn-success" href="{{ path('add_genre') }}">Создать жанр</a></div>
+        </div>
+
+        {% if pagination.getItems()|length > 0 %}
+            <table class="table" id="genres_list">
+                <tr>
+                    <th>name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for genre in pagination.getItems() %}
+                    <tr>
+                        <td><a href="{{ path('get_one_genre', {'id': genre.id}) }}">{{ genre.name }}</a></td>
+                        <td><a class="edit-item" title="Редактировать" href="{{ path('update_genre', {'id': genre.id}) }}">✔</a></td>
+                        <td><a class="remove-item" title="Удалить" href="{{ path('delete_genre', {'id': genre.id}) }}">&#10006;</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            Результаты не найдены.
+        {% endif %}
+    </div>
+</div>
+
+<div class="pagination-block">
+    <div>
+        -------------------------------------------------------------------------
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+</div>

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="item-wrap">
+        {{ form_start(form, {'attr': {'class' : 'item'}}) }}
+        {{ form_row(form.name, {'attr': {'class' : 'form-control'}}) }}
+        {{ form_row(form.releaseDate, {'attr': {'class' : 'form-control'}}) }}
+        {{ form_row(form.catalogEntryDate, {'attr': {'class' : 'form-control'}}) }}
+        {% if authorizedUser is defined %}
+            <div class="rating-block">
+                <div class="likes-dislikes-buttons">
+                    <div class="rating-plus"><span><button type="button" class="btn btn-success likes-btn">+</button></span>&nbsp/&nbsp<span class="rating-minus"><button type="button" class="btn btn-success dislikes-btn">-</button></span></div>
+                </div>
+                {{ form_row(form.rating, {'attr': {'class' : 'form-control rating'}}) }}
+            </div>
+        {% else %}
+            {{ form_row(form.rating, {'attr': {'class' : 'form-control rating'}}) }}
+        {% endif %}
+        <div class="avatar">
+            <img src="{{ existedAvatar }}">
+        </div>
+        {{ form_row(form.avatar, {'attr': {'class' : 'form-control'}}) }}
+        {{ form_row(form.genre, {'attr': {'class' : 'form-control'}}) }}
+        {{ form_row(form.author, {'attr': {'class' : 'form-control'}}) }}
+        <button class="btn btn-success" type="submit">Сохранить</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

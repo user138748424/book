@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="table-item-wrap">
+        <div class="mt10 col-xs-6 col-md-11 col-lg-11">
+            <table class="table">
+                {% for title, prop in author %}
+                    <tr>
+                        <td>{{ title }}</td>
+                        <td>{{ prop }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

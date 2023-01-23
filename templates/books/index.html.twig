@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index Page{% endblock %}
+
+{% block body %}
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#search_form_date_start').datepicker();
+        $('#search_form_date_end').datepicker();
+      })
+    </script>
+
+    <div class="search_omnibox_wrap">
+        <div class="search_omnibox_title">Найти книги</div>
+        <div>
+            {{ form_start(omniboxSearchForm) }}
+            {{ form_row(omniboxSearchForm.search, { 'attr': {'class': 'form-control'} }) }}
+            {{ form_row(omniboxSearchForm.submit, { 'attr': {'class': 'btn btn-success search_button'} }) }}
+            {{ form_end(omniboxSearchForm) }}
+        </div>
+    </div>
+
+    <div class="filter-block">
+        {{ form_start(searchForm) }}
+        <div class="header-filter">Фильтр</div>
+        <div class="row">
+            <div class="date-start-wrap col-xs-6">
+                {{ form_row(searchForm.date_start, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="date-end-wrap col-xs-6">
+                {{ form_row(searchForm.date_end, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="row align-selector">
+            <div class="col-xs-6 ">
+                {{ form_row(searchForm.genre, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-xs-6 ">
+                {{ form_row(searchForm.author, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="row buttons-row">
+            <div class="mt10 button">
+                {{ form_row(searchForm.submit, { 'attr': {'class': 'btn btn-success fl'} }) }}
+            </div>
+            <div class="mt10">
+                <a href="{{ path("get_all_books") }}" type="reset" class="btn btn-success">Reset</a>
+            </div>
+        </div>
+        {{ form_end(searchForm) }}
+    </div>
+
+    <div class="site-pages">
+        <div class="genres_list"><a class="btn btn-success" href="{{ path('get_all_genres') }}">Жанры</a></div>
+        <div class="authors_list"><a class="btn btn-success" href="{{ path('get_all_authors') }}">Авторы</a></div>
+        <div class="api_doc"><a class="btn btn-success" href="/api/doc">Swagger</a></div>
+        <div class="register"><a class="btn btn-success" href="/register">Профиль пользователя</a></div>
+    </div>
+
+    <div id="pjax-container">
+        {{ include('books/book_grid.html.twig') }}
+    </div>
+
+    <div class="auth_header">Только авторизованные пользователи могут добавлять книги в избранное и менять рейтинг книг (<a href="/login">авторизоваться</a>)</div>
+
+    <div class="favorites">
+        <div class="favorites-header">Избранные книги</div>
+        <div class="favorite-book-wrap">
+        {% if favoriteBooks|length > 0 %}
+            {% for book in favoriteBooks %}
+                <div class="favorite-book-item">
+                    <div class="favorite-book-name">{{ book.name }}</div>
+                    <div><img class="favorite-book-image" alt="{{ book.name }}" src="{{ book.avatar }}"></div>
+                </div>
+            {% endfor %}
+        {% else %}
+            Ничего не избрано.
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="latest">
+        <div class="latest-header">10 последних книг, занесенных в каталог</div>
+        <div class="latest-book-wrap">
+            {% if latestBooks|length > 0 %}
+                {% for book in latestBooks %}
+                    <div class="latest-book-item">
+                        <div class="latest-book-name">{{ book.name }}</div>
+                        <div><img class="latest-book-image" alt="{{ book.name }}" src="{{ book.avatar }}"></div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                Книги отсутствуют.
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

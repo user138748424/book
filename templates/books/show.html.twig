@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="table-item-wrap">
+        <div class="mt10 col-xs-6 col-md-11 col-lg-11">
+            <table class="table">
+                {% for title, prop in book %}
+                    <tr>
+                        <td>{{ title }}</td>
+                        <td>{{ prop }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="recommended">
+        <div class="recommended-header">Книги, рекоммендованные к прочтению</div>
+        <div class="recommended-book-wrap">
+            {% if recommendedBooks|length > 0 %}
+                {% for book in recommendedBooks %}
+                    <div class="recommended-book-item">
+                        <div class="recommended-book-name">{{ book.name }}</div>
+                        <div><img class="recommended-book-image" alt="{{ book.name }}" src="{{ book.avatar }}"></div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

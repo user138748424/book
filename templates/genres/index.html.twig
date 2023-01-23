@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index Page{% endblock %}
+
+{% block body %}
+
+    <div class="filter-block">
+        {{ form_start(searchForm) }}
+        <div class="header-filter">Фильтр</div>
+        <div class="row align-selector">
+            <div class="col-xs-6 ">
+                {{ form_row(searchForm.genre, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-xs-6 " style="display: none">
+                {{ form_row(searchForm.author, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="date-start-wrap col-xs-6" style="display: none">
+                {{ form_row(searchForm.date_start, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="date-end-wrap col-xs-6" style="display: none">
+                {{ form_row(searchForm.date_end, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <div class="row buttons-row">
+            <div class="mt10 button">
+                {{ form_row(searchForm.submit, { 'attr': {'class': 'btn btn-success fl'} }) }}
+            </div>
+            <div class="mt10">
+                <a href="{{ path("get_all_genres") }}" type="reset" class="btn btn-success">Reset</a>
+            </div>
+        </div>
+        {{ form_end(searchForm) }}
+    </div>
+
+    <div id="pjax-container">
+        {{ include('genres/genre_grid.html.twig') }}
+    </div>
+{% endblock %}

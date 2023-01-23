@@ -1,0 +1,41 @@
+<div class="table-item-wrap">
+    <div class="mt10 col-xs-6 col-md-11 col-lg-11">
+        <div class="header-items">Авторы</div>
+
+        <div class="nav-panel">
+            <div class="add-item"><a class="btn btn-success" href="{{ path('add_author') }}">Создать автора</a></div>
+        </div>
+
+        {% if pagination.getItems()|length > 0 %}
+            <table class="table" id="authors_list">
+                <tr>
+                    <th>name</th>
+                    <th>born_date</th>
+                    <th>gender</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for author in pagination.getItems() %}
+                    <tr>
+                        <td><a href="{{ path('get_one_author', {'id': author.id}) }}">{{ author.name }}</a></td>
+                        <td>{{ author.getBornDate().getTimestamp|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ author.gender }}</td>
+                        <td><a class="edit-item" title="Редактировать" href="{{ path('update_author', {'id': author.id}) }}">✔</a></td>
+                        <td><a class="remove-item" title="Удалить" href="{{ path('delete_author', {'id': author.id}) }}">&#10006;</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            Результаты не найдены.
+        {% endif %}
+    </div>
+</div>
+
+<div class="pagination-block">
+    <div>
+        -------------------------------------------------------------------------
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+</div>

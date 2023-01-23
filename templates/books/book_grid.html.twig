@@ -1,0 +1,55 @@
+<div class="table-item-wrap">
+    <div class="mt10 col-xs-6 col-md-11 col-lg-11">
+        <div class="header-items">Книги</div>
+        <div class="add-item"><a class="btn btn-success" href="{{ path('add_book') }}">Создать задачу</a></div>
+        {% if pagination.getItems()|length > 0 %}
+            <table class="table" id="books_list">
+                <tr>
+                    <th>name</th>
+                    <th>release_date</th>
+                    <th>catalog_entry_date</th>
+                    <th>rating</th>
+                    <th>author</th>
+                    <th>genre</th>
+                    {% if authorizedUser is defined %}<th></th>{% endif %}
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for book in pagination.getItems() %}
+                    <tr>
+                        <td><a href="{{ path('get_one_book', {'id': book.id}) }}">{{ book.name }}</a></td>
+                        <td>{{ book.getReleaseDate().getTimestamp|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ book.getCatalogEntryDate().getTimestamp|date('Y-m-d H:i:s') }}</td>
+                        <td>{{ book.rating }}</td>
+                        <td>
+                            {% set authors = authorsCatalog[book.id] %}
+                            {% for author in authors %}
+                                <a href="{{ path('get_one_author', {'id': author.id}) }}">{{ author.name }}</a>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% set genres = genresCatalog[book.id] %}
+                            {% for genre in genres %}
+                                <a href="{{ path('get_one_genre', {'id': genre.id}) }}">{{ genre.name }}</a>
+                            {% endfor %}
+                        </td>
+                        {% if authorizedUser is defined %}<td><a class="favorite-item" title="Добавить в избранное" href="{{ path('favorite_book', {'id': book.id}) }}">Добавить в избранное</a></td>{% endif %}
+                        <td><a class="edit-item" title="Редактировать" href="{{ path('update_book', {'id': book.id}) }}">✔</a></td>
+                        <td><a class="remove-item" title="Удалить" href="{{ path('delete_book', {'id': book.id}) }}">&#10006;</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            Результаты не найдены.
+        {% endif %}
+    </div>
+</div>
+
+<div class="pagination-block">
+    <div>
+        -------------------------------------------------------------------------
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+</div>
